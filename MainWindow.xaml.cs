@@ -37,7 +37,7 @@ namespace Demo
                 p.currentDiscount = discountService.CalcDiscount(totalQuantity);
             }
 
-            dataGrid.ItemsSource = partnerList;
+            ListBoxPartners.ItemsSource = partnerList;
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -52,20 +52,36 @@ namespace Demo
             }
         }
 
-        private void dataGrid_DoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (dataGrid.SelectedItem is Partner selectedPartner)
+            // Проверяем, выбрана ли карточка в ListBox
+            if (ListBoxPartners.SelectedItem is Partner selectedPartner)
             {
                 PartnerWindow partnerWindow = new PartnerWindow(selectedPartner);
                 partnerWindow.Owner = this;
-
                 if (partnerWindow.ShowDialog() == true)
                 {
-                    LoadPartner(); // Перезагружаем список с актуальными значениями
+                    LoadPartner(); // Обновляем список на экране
                 }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите партнера из списка для редактирования!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
-
+        private void BtnHistory_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListBoxPartners.SelectedItem is Partner selectedPartner)
+            {
+                HistoryWindow historyWindow = new HistoryWindow(selectedPartner);
+                historyWindow.Owner = this;
+                historyWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите партнера из списка для просмотра истории!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

@@ -5,9 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Учет партнеров компании" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+
     <Grid>
-        <DataGrid x:Name="dataGrid" MouseDoubleClick="dataGrid_DoubleClick" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button Content="Добавить партнера" Click="BtnAdd_Click" Width="150" HorizontalAlignment="Left" Margin="200"/>
+        <Grid.RowDefinitions>
+            <!-- Верхняя строка для кнопок управления -->
+            <RowDefinition Height="Auto"/>
+            <!-- Основная строка для списка карточек -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель управления с кнопками -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#EEEEEE">
+            <Button Content="Добавить партнера" Width="150" Height="30" Margin="0,0,10,0" Click="BtnAdd_Click"/>
+            <Button Content="Редактировать" Width="130" Height="30" Margin="0,0,10,0" Click="BtnEdit_Click"/>
+            <Button Content="История реализации" Width="150" Height="30" Click="BtnHistory_Click"/>
+        </StackPanel>
+
+        <!-- Список карточек партнера -->
+        <ListBox x:Name="ListBoxPartners" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="#F5F5F5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!-- Внешняя рамка карточки партнера с закруглением -->
+                    <Border BorderBrush="#673AB7" BorderThickness="1.5" CornerRadius="4" Margin="5" Padding="15,10" Background="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Левая часть карточки: Основная информация -->
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <!-- Название: Тип | Наименование -->
+                                <TextBlock Text="{Binding DisplayTitle}" FontSize="16" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,4"/>
+
+                                <!-- ФИО Директора -->
+                                <WrapPanel Margin="0,2">
+                                    <TextBlock Text="Директор: " FontWeight="SemiBold" Foreground="#555555"/>
+                                    <TextBlock Text="{Binding directorName}" Foreground="#333333"/>
+                                </WrapPanel>
+
+                                <!-- Номер телефона -->
+                                <TextBlock Text="{Binding phone}" Foreground="#666666" Margin="0,2"/>
+
+                                <!-- Рейтинг партнера -->
+                                <WrapPanel Margin="0,2">
+                                    <TextBlock Text="Rating: " FontWeight="SemiBold" Foreground="#555555"/>
+                                    <TextBlock Text="{Binding rating}" Foreground="#333333"/>
+                                </WrapPanel>
+                            </StackPanel>
+
+                            <!-- Правая часть карточки: Размер скидки крупным шрифтом -->
+                            <Border Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding currentDiscount}" FontSize="22" FontWeight="Bold" Foreground="#673AB7"/>
+                                    <TextBlock Text="%" FontSize="16" FontWeight="Bold" Foreground="#673AB7" VerticalAlignment="Top" Margin="2,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
+

@@ -27,5 +27,8 @@ namespace Demo.Models
 
         [Column("Amount")]
         public Decimal? amount { get; set; }
+
+        [ForeignKey("product")]
+        public virtual Product ProductNavigation { get; set; }
     }
 }
