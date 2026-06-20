@@ -1,0 +1,7 @@
+Откройте встроенный терминал в Visual Studio (Ctrl + ~) или обычную командную строку Windows (cmd).
+cd C:\Users\user\source\repos\Demo
+git init
+dotnet new gitignore
+git add .
+git commit -m "Initial commit: Проект подсистемы партнеров"
+git commit -m "feat: добавлена панель кнопок управления на главное окно"
